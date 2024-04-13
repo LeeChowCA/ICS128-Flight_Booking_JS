@@ -119,7 +119,8 @@ let weatherDisplay = async (lat, long, airportInfo, airportLocation) => {
 let markAirport = () => {
 
     let obj;
-
+    let locationArray = [];
+    //must not be in the fetch,
     fetch('mAirports.json')
         .then(response => {
             return response.json();
@@ -134,19 +135,39 @@ let markAirport = () => {
 
                 localStorage.setItem("airportLat", decimalLocation.lat);
                 localStorage.setItem("airportLong", decimalLocation.long);
-                console.log(decimalLocation.lat)
-                console.log(decimalLocation.long)
 
                 const airportLocation = L.marker(
                     [decimalLocation.lat, decimalLocation.long],
                     {icon: airportIcon}).addTo(map);
                 // set the marker for all the airports
-                airportLocation.setLatLng([decimalLocation.lat, decimalLocation.long]);
+                // airportLocation.setLatLng([decimalLocation.lat, decimalLocation.long]);
                 //set the lat and long for airport.
 
                 // weatherDisplay(decimalLocation.lat, decimalLocation.long, element);
-                weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
+                // weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
                 //     make sure to pass airportLocation, so it can be attached with the popup.
+
+
+                let distance = $("#distance");
+                airportLocation.on("click", () => {
+
+                    if (locationArray.length < 2) {
+                        locationArray.push(decimalLocation);
+
+                        if (locationArray.length === 2) {
+                            let latlng1 = L.latLng(locationArray[0].lat, locationArray[0].long);
+                            let latlng2 = L.latLng(locationArray[1].lat, locationArray[1].long);
+                            let distanceBetween = map.distance(latlng1, latlng2);
+                            createPolyLine(latlng1, latlng2);
+                            distance.html(`${distanceBetween}`);
+                            // distance method of leaflet
+                            locationArray = [];
+                        }
+                    } else {
+                        locationArray = [decimalLocation];
+
+                    }
+                })
             }
         })
 
@@ -155,5 +176,40 @@ let markAirport = () => {
 }
 
 markAirport();
+
+let createPolyLine = (airport1,airport2) => {
+    let airLatlng1 = airport1;
+    let airLatLng2 = airport2;
+
+    let latlngs = [airLatlng1, airLatLng2];
+
+    let ployLine = L.polyline(latlngs, {color:"red"}).addTo(map);
+
+}
+// createPolyLine();
+
+let flightDisplay = $("#flightDisplay");
+
+let getFakeFlightData = () => {
+    fetch("fake_flights.json").then((response) => {
+        return response.json()
+    }).then(data =>{
+        const obj = data;
+        console.log(obj.at(0))
+        for (const element in obj) {
+            let flightInfo = element;
+            console.log(flightInfo)
+        }
+
+
+    })
+}
+
+getFakeFlightData();
+
+
+
+
+
 
 
