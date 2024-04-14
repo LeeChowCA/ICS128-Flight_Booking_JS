@@ -116,6 +116,159 @@ let weatherDisplay = async (lat, long, airportInfo, airportLocation) => {
 }
 //method is used to display the weather and temperature information.
 
+let flightDisplay = $("#flightDisplay");
+
+let populateFlight = (element, distanceBetween) => {
+    let display = "";
+
+    display += (`<div class="col">
+                               <div class="card mt-3" style="width: 18rem;">
+                                  <img src="${element.image}" class="card-img-top" alt="flight">
+                                  <div class="card-body">
+                                    <p class="card-text">speed: ${element["speed_kph"]} kph</p>
+                                    <p class="card-text">type of plane: ${element["type_of_plane"]}</p>
+                                    <p class="card-text">seats remaining: ${element["seats_remaining"]}</p>
+                                    <p class="card-text">costs per KM: ${element["price_per_km"]}</p>
+                                    <p class="cardd-text">extraFuelCharge${element["extraFuelCharge"]}</p>
+                                    <p class="cardd-text">max TakeOff Alt is ${element["maxTakeOffAlt"]}</p>
+                                    <p class="cardd-text">duration of flight is ${Math.round(distanceBetween / 10 / element["speed_kph"])} min</p>
+                                    <p class="cardd-text">total cost is ${Math.round(element["price_per_km"] * distanceBetween / 1000)} </p>
+                                    
+                                    <button type="button" class="btn btn-secondary">Book</button>
+                                  </div>
+                               </div>
+                            </div>`);
+    return display;
+}
+//call this method to display the flight
+
+const twoHoursAbove = $("#twoHoursAbove");
+const twoHoursBelow = $("#twoHoursBelow");
+const belowOneGrand = $("#belowOneGrand");
+const aboveOneGrand = $("#aboveOneGrand");
+const airBus = $("#airBus");
+const boeing = $("#boeing");
+
+
+let filterDisplay = (data, timeLength, distanceBetween, price) => {
+    twoHoursAbove.click(() => {
+
+        //empty the display
+        let display = "";
+
+        for (const element of data) {
+            if (distanceBetween / 10 / element["speed_kph"] > 120) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+
+    })
+    twoHoursBelow.click(() => {
+
+        //empty the display
+        let display = "";
+
+
+        for (const element of data) {
+            if (distanceBetween / 10 / element["speed_kph"] < 120) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+    })
+
+    belowOneGrand.click(() => {
+
+        //empty the display
+        let display = "";
+
+        for (const element of data) {
+            if (Math.round(element["price_per_km"] * distanceBetween / 1000) < 1000) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+    })
+    aboveOneGrand.click(() => {
+
+        //empty the display
+        let display = "";
+
+        for (const element of data) {
+            if (Math.round(element["price_per_km"] * distanceBetween / 1000) > 1000) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+    })
+
+    airBus.click(() => {
+
+        //empty the display
+        let display = "";
+
+        for (const element of data) {
+            if (element["type_of_plane"].includes("Airbus")) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+    })
+    boeing.click(() => {
+
+        //empty the display
+        let display = "";
+
+        for (const element of data) {
+            if (element["type_of_plane"].includes("Boeing")) {
+                display += populateFlight(element, distanceBetween);
+            }
+            //store card info into display variable
+        }
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+    })
+
+
+
+}
+// filter method
+
+let getFakeFlightData = (distanceBetween) => {
+    fetch("fake_flights.json").then((response) => {
+        return response.json()
+    }).then(data => {
+
+        let display = "";
+        for (const element of data) {
+
+            display += populateFlight(element, distanceBetween);
+            filterDisplay(data, Math.round(distanceBetween / 10 / element["speed_kph"]), distanceBetween, Math.round(element["price_per_km"] * distanceBetween / 1000));
+            //call filterDisplay method to add click listener to all the dropdown buttons
+        }
+        //store card info into display variable
+        flightDisplay.html(`${display}`);
+        //     display the cards.
+        flightDisplay.fadeIn("4000");
+
+
+    })
+}
+// method to display the flight info
+
+
 let markAirport = () => {
 
     let obj;
@@ -126,6 +279,8 @@ let markAirport = () => {
             return response.json();
         }) // Parses the JSON string into a JavaScript object
         .then(data => {
+
+
             obj = data;
             for (const element of obj) {
                 let geoLocation = element["Geographic Location"];
@@ -159,9 +314,13 @@ let markAirport = () => {
                             let latlng2 = L.latLng(locationArray[1].lat, locationArray[1].long);
                             let distanceBetween = map.distance(latlng1, latlng2);
                             createPolyLine(latlng1, latlng2);
-                            distance.html(`${distanceBetween}`);
+                            distance.html(`${Math.round(distanceBetween / 1000)} km`);
                             // distance method of leaflet
                             locationArray = [];
+                            getFakeFlightData(distanceBetween);
+                            //call the function to display the masonry cards.
+
+
                         }
                     } else {
                         locationArray = [decimalLocation];
@@ -170,42 +329,27 @@ let markAirport = () => {
                 })
             }
         })
-
     // Do something with the data
 
 }
 
 markAirport();
 
-let createPolyLine = (airport1,airport2) => {
+
+let createPolyLine = (airport1, airport2) => {
     let airLatlng1 = airport1;
     let airLatLng2 = airport2;
 
     let latlngs = [airLatlng1, airLatLng2];
 
-    let ployLine = L.polyline(latlngs, {color:"red"}).addTo(map);
+    let ployLine = L.polyline(latlngs, {color: "red"}).addTo(map);
 
 }
 // createPolyLine();
 
-let flightDisplay = $("#flightDisplay");
-
-let getFakeFlightData = () => {
-    fetch("fake_flights.json").then((response) => {
-        return response.json()
-    }).then(data =>{
-        const obj = data;
-        console.log(obj.at(0))
-        for (const element in obj) {
-            let flightInfo = element;
-            console.log(flightInfo)
-        }
 
 
-    })
-}
 
-getFakeFlightData();
 
 
 
