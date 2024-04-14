@@ -94,7 +94,7 @@
 
 <div id="mainPage">
     <div class="container">
-        <div class="row" data-masonry='{"percentPosition": true}'>
+        <div class="row mt-3" >
             <div class="col-6">
                 <div id="map"></div>
             </div>
@@ -107,11 +107,44 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" id="flightDisplay">
-
-                </div>
-
             </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="btn-group">
+        <div class="dropdown me-2" id="durationChooser">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="twoHoursAbove">twoHoursAbove</a></li>
+                <li><a class="dropdown-item" id="twoHoursBelow">twoHoursBelow</a></li>
+            </ul>
+        </div>
+        <div class="dropdown me-2" id="costChooser">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="belowOneGrand">belowOneGrand</a></li>
+                <li><a class="dropdown-item" id="aboveOneGrand">AboveOneGrand</a></li>
+            </ul>
+        </div>
+        <div class="dropdown me-2" id="typeChooser">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Choose Flight Type
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="airBus">Air Bus</a></li>
+                <li><a class="dropdown-item" id="boeing">Boeing</a></li>
+            </ul>
+        </div>
+        </div>
+        <div class="row" id="flightDisplay" data-masonry='{"percentPosition": true}' style="display: none">
+
         </div>
     </div>
 
