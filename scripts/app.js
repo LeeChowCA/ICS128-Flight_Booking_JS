@@ -10,7 +10,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 let myIcon = L.icon({
-    iconUrl: 'images/person.png',
+    iconUrl: 'public/images/person.png',
     iconSize: [36, 36],
     iconAnchor: [22, 94],
     popupAnchor: [-3, -76],
@@ -44,7 +44,7 @@ findUserLocation();
 
 
 let airportIcon = L.icon({
-        iconUrl: 'images/airplane.jpg',
+        iconUrl: 'public/images/airplane.jpg',
         iconSize: [36, 36],
         iconAnchor: [22, 94],
         popupAnchor: [-3, -76],
@@ -99,7 +99,7 @@ let convertToDecimalDegree = (coordination) => {
 
 
 let weatherDisplay = async (lat, long, airportInfo, airportLocation) => {
-    let apiKey = "552ede3c087c5810a2bbbf22dfea5b8c";
+    let apiKey = "16a6b6c6c23e8474784ca7b57acb05ed";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
 
     let response = await fetch(apiUrl);
@@ -324,7 +324,7 @@ let filterDisplay = (data, timeLength, distanceBetween, price) => {
 
 
 let getFakeFlightData = (distanceBetween) => {
-    fetch("fake_flights.json").then((response) => {
+    fetch("public/fake_flights.json").then((response) => {
         return response.json()
     }).then(data => {
 
@@ -353,7 +353,7 @@ let markAirport = () => {
     let obj;
     let locationArray = [];
     //must not be in the fetch,
-    fetch('mAirports.json')
+    fetch('public/mAirports.json')
         .then(response => {
             return response.json();
         }) // Parses the JSON string into a JavaScript object
@@ -371,12 +371,15 @@ let markAirport = () => {
                 const airportLocation = L.marker(
                     [decimalLocation.lat, decimalLocation.long],
                     {icon: airportIcon}).addTo(map);
+                airportLocation.on("click", () => {
+                    weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
+                })
                 // set the marker for all the airports
                 // airportLocation.setLatLng([decimalLocation.lat, decimalLocation.long]);
                 //set the lat and long for airport.
 
                 // weatherDisplay(decimalLocation.lat, decimalLocation.long, element);
-                weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
+
                 //     make sure to pass airportLocation, so it can be attached with the popup.
 
                 let distance = $("#distance");
@@ -401,6 +404,7 @@ let markAirport = () => {
                     }
                 })
             }
+
         })
     // Do something with the data
 

@@ -6,8 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="64458a91-6fd5-4ce6-92ab-4047dbf048d3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fake_flights.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/fake_flights.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/airplane.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/airplane.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight11.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight11.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight12.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight12.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight6.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight7.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight7.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight8.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight8.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/flight9.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/flight9.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/person.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/person.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mAirports.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mAirports.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +59,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="M:\Term2\ICS128\Final\public" />
+      <recent name="M:\Term2\ICS128\Final\scripts" />
+      <recent name="M:\Term2\ICS128\Final" />
       <recent name="M:\Term2\ICS128\Final\images" />
     </key>
   </component>
@@ -56,7 +76,7 @@
       <workItem from="1712888508852" duration="4124000" />
       <workItem from="1712971222850" duration="4092000" />
       <workItem from="1713025808437" duration="256000" />
-      <workItem from="1713121922991" duration="25398000" />
+      <workItem from="1713121922991" duration="28017000" />
     </task>
     <servers />
   </component>
@@ -73,5 +93,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/scripts/app.js</url>
+          <line>100</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

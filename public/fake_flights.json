@@ -6,7 +6,7 @@
         "price_per_km": 29,
         "extraFuelCharge": 0.54,
         "maxTakeOffAlt": 3531,
-        "image": "images/flight1.jpg"
+        "image": "public/images/flight1.jpg"
     },
     {
         "speed_kph": 495,
@@ -15,7 +15,7 @@
         "price_per_km": 13,
         "extraFuelCharge": 2.21,
         "maxTakeOffAlt": 3572,
-        "image": "images/flight2.jpg"
+        "image": "public/images/flight2.jpg"
     },
     {
         "speed_kph": 555,
@@ -24,7 +24,7 @@
         "price_per_km": 20,
         "extraFuelCharge": 5.65,
         "maxTakeOffAlt": 3432,
-        "image": "images/flight3.jpg"
+        "image": "public/images/flight3.jpg"
     },
     {
         "speed_kph": 541,
@@ -33,7 +33,7 @@
         "price_per_km": 10,
         "extraFuelCharge": 4.03,
         "maxTakeOffAlt": 4909,
-        "image": "images/flight4.jpg"
+        "image": "public/images/flight4.jpg"
     },
     {
         "speed_kph": 439,
@@ -42,7 +42,7 @@
         "price_per_km": 29,
         "extraFuelCharge": 5.15,
         "maxTakeOffAlt": 5409,
-        "image": "images/flight5.jpg"
+        "image": "public/images/flight5.jpg"
     },
     {
         "speed_kph": 529,
@@ -51,7 +51,7 @@
         "price_per_km": 15,
         "extraFuelCharge": 8.32,
         "maxTakeOffAlt": 8106,
-        "image": "images/flight6.jpg"
+        "image": "public/images/flight6.jpg"
     },
     {
         "speed_kph": 840,
@@ -60,7 +60,7 @@
         "price_per_km": 26,
         "extraFuelCharge": 6.09,
         "maxTakeOffAlt": 5779,
-        "image": "images/flight7.jpg"
+        "image": "public/images/flight7.jpg"
     },
     {
         "speed_kph": 530,
@@ -69,7 +69,7 @@
         "price_per_km": 24,
         "extraFuelCharge": 2.22,
         "maxTakeOffAlt": 15000,
-        "image": "images/flight8.jpg"
+        "image": "public/images/flight8.jpg"
     },
     {
         "speed_kph": 593,
@@ -78,7 +78,7 @@
         "price_per_km": 28,
         "extraFuelCharge": 2.06,
         "maxTakeOffAlt": 15000,
-        "image": "images/flight9.jpg"
+        "image": "public/images/flight9.jpg"
     },
     {
         "speed_kph": 762,
@@ -87,7 +87,7 @@
         "price_per_km": 17,
         "extraFuelCharge": 6.4,
         "maxTakeOffAlt": 4189,
-        "image": "images/flight10.jpg"
+        "image": "public/images/flight10.jpg"
     },
     {
         "speed_kph": 516,
@@ -96,7 +96,7 @@
         "price_per_km": 14,
         "extraFuelCharge": 0.83,
         "maxTakeOffAlt": 7618,
-        "image": "images/flight11.jpg"
+        "image": "public/images/flight11.jpg"
     },
     {
         "speed_kph": 491,
@@ -105,6 +105,6 @@
         "price_per_km": 30,
         "extraFuelCharge": 0.13,
         "maxTakeOffAlt": 3562,
-        "image": "images/flight12.jpg"
+        "image": "public/images/flight12.jpg"
     }
 ]
