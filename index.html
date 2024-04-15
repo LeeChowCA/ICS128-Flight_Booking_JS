@@ -94,7 +94,7 @@
 
 <div id="mainPage">
     <div class="container">
-        <div class="row mt-3" >
+        <div class="row mt-3">
             <div class="col-6">
                 <div id="map"></div>
             </div>
@@ -111,40 +111,175 @@
         </div>
     </div>
     <div class="container mt-5">
-        <div class="btn-group">
-        <div class="dropdown me-2" id="durationChooser">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-            </a>
+        <div class="modal fade" id="loginModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="needs-validation" novalidate id="loginForm">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Booking Info</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                                            <input type="text" class="form-control" id="firstName" required>
+                                            <div class="invalid-feedback">please provide a second name, it shouldn't
+                                                contain
+                                                any
+                                                spaces
+                                            </div>
+                                        </div>
 
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="twoHoursAbove">twoHoursAbove</a></li>
-                <li><a class="dropdown-item" id="twoHoursBelow">twoHoursBelow</a></li>
-            </ul>
-        </div>
-        <div class="dropdown me-2" id="costChooser">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-            </a>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                                            <input type="text" class="form-control" id="secondName">
+                                            <div class="invalid-feedback">please provide a second name, it shouldn't
+                                                contain
+                                                any
+                                                spaces
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+                                            <input type="text" class="form-control" id="email">
+                                            <div class="invalid-feedback">please provide a valid email address</div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                                            <input type="number" class="form-control" id="age">
+                                            <div class="invalid-feedback">please provide an age, it should be 0-120
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                                            <input type="text" class="form-control" id="postalCode">
+                                            <div class="invalid-feedback">please provide a valid postal code</div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                            <input type="text" class="form-control" id="phoneNumber">
+                                            <div class="invalid-feedback">please provide a valid phone number</div>
+                                        </div>
+                                        <div id="allVerifiedMessage">
 
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="belowOneGrand">belowOneGrand</a></li>
-                <li><a class="dropdown-item" id="aboveOneGrand">AboveOneGrand</a></li>
-            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-end">
+                                        <button id="closeButton" type="button" class="btn btn-secondary mt-3 me-2"
+                                                data-bs-dismiss="modal">Cancel
+                                        </button>
+                                        <button id="submitButton" type="submit" class="btn btn-primary mt-3">Submit
+                                        </button>
+                                        <button id="flightInfoDisplayBtn" type="submit"
+                                                class="btn btn-primary mt-3 d-none" data-bs-toggle="modal"
+                                                data-bs-target="#flightModal"> Proceed To Next Step
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="dropdown me-2" id="typeChooser">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Choose Flight Type
-            </a>
+        <div class="modal fade" id="flightModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Your Order Info</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="flightCheckOutInfo">
 
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="airBus">Air Bus</a></li>
-                <li><a class="dropdown-item" id="boeing">Boeing</a></li>
-            </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#congratulationModel">Confirm Order</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-        <div class="row" id="flightDisplay" data-masonry='{"percentPosition": true}' style="display: none">
 
+        <div class="modal fade" id="congratulationModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Congratulation, Your Order Has Been Placed</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="congratulationModelDisplay">
+                        <h1>Your order has been placed successfully, we will deal with your order ASAP
+                        and an email will be sent to you once the order is dealt successfully!
+                        thanks and have a good day!</h1>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group d-none" id="filterBtnDisplay">
+            <div class="dropdown me-2" id="durationChooser">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Duration
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="twoHoursAbove">twoHoursAbove</a></li>
+                    <li><a class="dropdown-item" id="twoHoursBelow">twoHoursBelow</a></li>
+                </ul>
+            </div>
+            <div class="dropdown me-2" id="costChooser">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Price
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="belowOneGrand">belowOneGrand</a></li>
+                    <li><a class="dropdown-item" id="aboveOneGrand">AboveOneGrand</a></li>
+                </ul>
+            </div>
+            <div class="dropdown me-2" id="typeChooser">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Choose Flight Type
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="airBus">Air Bus</a></li>
+                    <li><a class="dropdown-item" id="boeing">Boeing</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row" id="flightDisplay" data-masonry='{"percentPosition": true}'>
+        </div>
+
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasShoppingCart"
+             aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Shopping Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column justify-content-between" id="cartBody">
+                <!--                flex column-->
+                <div id="cart">
+
+                </div>
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary me-1" id="book" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Book
+                    </button>
+                    <button type="button" class="btn btn-secondary me-1" id="removeAll">Remove All</button>
+                </div>
+            </div>
         </div>
     </div>
 

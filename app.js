@@ -65,26 +65,22 @@ let convertToDecimalDegree = (coordination) => {
     let latDegree = parseInt(lat.substring(0, 2));
     let latMinute = parseInt(lat.substring(2, 4));
     let latDirection = lat.charAt(4);
-    // console.log(latDirection)
 
     let longDegree;
     let longMinute;
     let longDirection;
 
-    // console.log(long.length)
 
     if (long.length <= 5) {
         longDegree = parseInt(long.substring(0, 2));
         longMinute = parseInt(long.substring(2, 4));
         longDirection = long.charAt(4);
-        // console.log(long)
-        // console.log(longDirection)
+
     } else {
         longDegree = parseInt(long.substring(0, 3));
         longMinute = parseInt(long.substring(3, 5));
         longDirection = long.charAt(5);
-        // console.log(long)
-        // console.log(longDirection)
+
     }
     let latDecimal = latDegree + latMinute / 60;
     let longDecimal = longDegree + longMinute / 60;
@@ -108,21 +104,21 @@ let weatherDisplay = async (lat, long, airportInfo, airportLocation) => {
 
     let response = await fetch(apiUrl);
     let data = await response.json();
-    // console.log(data)
     let temp = data.main.temp;
-    // console.log(temp);
 
     airportLocation.bindPopup(`<p>This is ${airportInfo["Airport Name"]} international airport and current Temp is ${temp}</p>`);
 }
 //method is used to display the weather and temperature information.
 
 let flightDisplay = $("#flightDisplay");
+let buttonId = 0;
 
 let populateFlight = (element, distanceBetween) => {
     let display = "";
 
+
     display += (`<div class="col">
-                               <div class="card mt-3" style="width: 18rem;">
+                               <div class="card mt-3" style="width: 18rem;" >
                                   <img src="${element.image}" class="card-img-top" alt="flight">
                                   <div class="card-body">
                                     <p class="card-text">speed: ${element["speed_kph"]} kph</p>
@@ -134,13 +130,97 @@ let populateFlight = (element, distanceBetween) => {
                                     <p class="cardd-text">duration of flight is ${Math.round(distanceBetween / 10 / element["speed_kph"])} min</p>
                                     <p class="cardd-text">total cost is ${Math.round(element["price_per_km"] * distanceBetween / 1000)} </p>
                                     
-                                    <button type="button" class="btn btn-secondary">Book</button>
+                                    <button id="button${buttonId}" type="button" onclick='bookFlight("${element["type_of_plane"]}", "${element["speed_kph"]}", "${element["price_per_km"]}", "${element["extraFuelCharge"]}", "${Math.round(element["price_per_km"] * distanceBetween / 1000)}", "${Math.round(distanceBetween / 10 / element["speed_kph"])}")' class="btn btn-secondary"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasShoppingCart">Book
+                                    </button>
+<!--                                    the format of onclick is important-->
                                   </div>
                                </div>
                             </div>`);
+    buttonId++;
     return display;
 }
 //call this method to display the flight
+
+let cart = {
+};
+
+// Function to book a flight
+const bookFlight = (flightType, speed, pricePerKm, extraFuelCharge, totalPrice, duration) => {
+
+    // let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    if (cart[flightType]) {
+        // Check if the flight is already in the cart
+        cart[flightType].quantity += 1; // Increment the quantity
+    } else {
+        cart[flightType] = {
+            quantity: 1,
+            type: flightType,
+            speed: speed,
+            pricePerKm: pricePerKm,
+            extraFuelCharge: extraFuelCharge,
+            totalPrice: totalPrice,
+            duration: duration
+        };
+        // If not in the cart, add it with a quantity of 1
+    }
+    // localStorage.setItem("cart", JSON.stringify(cart));
+
+    renderCart(); // Update the cart display
+}
+
+const renderCart = () => {
+    // let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    const cartElement = $("#cart");
+    // The element where the cart is displayed
+    cartElement.empty();
+    // Clear existing cart items
+
+    Object.values(cart).forEach(item => {
+        cartElement.append(`
+            <div>
+                <p>Flight Type: ${item.type}</p>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary btn-sm" onclick="changeQuantity('${item.type}', -1)">-</button>
+                    <span class="px-3">${item.quantity}</span>
+                    <button class="btn btn-primary btn-sm" onclick="changeQuantity('${item.type}', 1)">+</button>
+                </div>
+            </div>
+        `);
+    });
+    // Iterate through the cart object to display each item
+}
+
+const changeQuantity = (flightType, change) => {
+
+    // let cart = JSON.parse(localStorage.getItem("cart")) || {};
+    if (cart[flightType]) {
+        cart[flightType].quantity += change;
+        if (cart[flightType].quantity < 1) {
+            delete cart[flightType];
+            // Remove the flight from the cart if quantity is zero
+        }
+
+        // localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        // Re-render the cart to reflect the change
+    }
+}
+
+const removeAll = $("#removeAll");
+
+removeAll.on("click", () => {
+    removeCart();
+})
+//attach removeCart method to removeAll button
+
+let removeCart = () => {
+    cart = {};
+    $("#cart").html("");
+}
+//method to remove all items in the shopping cart
+
 
 const twoHoursAbove = $("#twoHoursAbove");
 const twoHoursBelow = $("#twoHoursBelow");
@@ -151,7 +231,7 @@ const boeing = $("#boeing");
 
 
 let filterDisplay = (data, timeLength, distanceBetween, price) => {
-    twoHoursAbove.click(() => {
+    twoHoursAbove.on("click", () => {
 
         //empty the display
         let display = "";
@@ -161,17 +241,14 @@ let filterDisplay = (data, timeLength, distanceBetween, price) => {
                 display += populateFlight(element, distanceBetween);
             }
             //store card info into display variable
-
         }
         flightDisplay.html(`${display}`);
         //     display the cards.
-
     })
-    twoHoursBelow.click(() => {
+    twoHoursBelow.on("click", () => {
 
         //empty the display
         let display = "";
-
 
         for (const element of data) {
             if (distanceBetween / 10 / element["speed_kph"] < 120) {
@@ -242,16 +319,17 @@ let filterDisplay = (data, timeLength, distanceBetween, price) => {
     })
 
 
-
 }
 // filter method
+
 
 let getFakeFlightData = (distanceBetween) => {
     fetch("fake_flights.json").then((response) => {
         return response.json()
     }).then(data => {
 
-        let display = "";
+        let display = ``;
+
         for (const element of data) {
 
             display += populateFlight(element, distanceBetween);
@@ -259,12 +337,13 @@ let getFakeFlightData = (distanceBetween) => {
             //call filterDisplay method to add click listener to all the dropdown buttons
         }
         //store card info into display variable
-        flightDisplay.html(`${display}`);
+
+        $("#filterBtnDisplay").removeClass("d-none");
+        //display the button after user clicking 2 airports
+        flightDisplay.append(`${display}`);
         //     display the cards.
-        flightDisplay.fadeIn("4000");
-
-
-    })
+        flightDisplay.hide().fadeIn("4000");
+    }).catch(error => console.error(error));
 }
 // method to display the flight info
 
@@ -284,9 +363,7 @@ let markAirport = () => {
             obj = data;
             for (const element of obj) {
                 let geoLocation = element["Geographic Location"];
-
                 let decimalLocation = convertToDecimalDegree(geoLocation);
-                console.log(element["Geographic Location"]);
 
                 localStorage.setItem("airportLat", decimalLocation.lat);
                 localStorage.setItem("airportLong", decimalLocation.long);
@@ -299,9 +376,8 @@ let markAirport = () => {
                 //set the lat and long for airport.
 
                 // weatherDisplay(decimalLocation.lat, decimalLocation.long, element);
-                // weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
+                weatherDisplay(decimalLocation.lat, decimalLocation.long, element, airportLocation);
                 //     make sure to pass airportLocation, so it can be attached with the popup.
-
 
                 let distance = $("#distance");
                 airportLocation.on("click", () => {
@@ -319,12 +395,9 @@ let markAirport = () => {
                             locationArray = [];
                             getFakeFlightData(distanceBetween);
                             //call the function to display the masonry cards.
-
-
                         }
                     } else {
                         locationArray = [decimalLocation];
-
                     }
                 })
             }
@@ -348,12 +421,107 @@ let createPolyLine = (airport1, airport2) => {
 // createPolyLine();
 
 
+const loginForm = document.getElementById("loginForm");
+
+const firstNameInput = document.getElementById("firstName");
+const secondNameInput = document.getElementById("secondName");
+const secondNameTest = RegExp("^[A-Za-z]+$");
+const emailInput = document.getElementById("email");
+const emailTest = RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+const ageInput = document.getElementById("age");
+const ageTest = RegExp("^(?:120|[1-9]?[0-9])$");
+const phoneInput = document.getElementById("phoneNumber");
+const phoneTest = RegExp("^\\d{3}(-|\\s)?\\d{3}(-|\\s)?\\d{4}$");
+const postalInput = document.getElementById("postalCode");
+const postalTest = RegExp("^[ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ](?:\\s?\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)?$");
+
+let firstNameVerify = false;
+let secondNameVerify = false;
+let emailVerify = false;
+let ageVerify = false;
+let phoneVerify = false;
+let postalVerify = false;
 
 
+loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
 
+    if (firstNameInput.value.includes(" ") || firstNameInput.value === "") {
+        firstNameInput.classList.add("is-invalid"); // Add the is-invalid class
+    } else {
+        firstNameInput.classList.remove('is-invalid');
+        firstNameVerify = true;// Remove the class if the input passes validation
+    }
 
+    if (secondNameTest.test(secondNameInput.value)) {
+        secondNameInput.classList.remove("is-invalid");
+        secondNameVerify = true;
+    } else {
+        secondNameInput.classList.add("is-invalid");
+    }
 
+    if (ageTest.test(ageInput.value)) {
+        ageInput.classList.remove("is-invalid");
+        ageVerify = true;
+    } else {
+        ageInput.classList.add("is-invalid");
+    }
 
+    if (emailTest.test(emailInput.value)) {
+        emailInput.classList.remove("is-invalid");
+        emailVerify = true;
+    } else {
+        emailInput.classList.add("is-invalid");
+    }
 
+    if (phoneTest.test(phoneInput.value)) {
+        phoneInput.classList.remove("is-invalid");
+        phoneVerify = true;
+    } else {
+        phoneInput.classList.add("is-invalid");
+    }
 
+    if (postalTest.test(postalInput.value)) {
+        postalInput.classList.remove("is-invalid");
+        postalVerify = true;
+    } else {
+        postalInput.classList.add("is-invalid");
+    }
 
+    if (firstNameVerify && secondNameVerify && ageVerify && emailVerify && phoneVerify && postalVerify) {
+        document.getElementById("loginForm").setAttribute("class","was-validated");
+        submitButton.setAttribute("data-bs-dismiss", "modal");
+        document.getElementById("allVerifiedMessage").innerHTML = `<span style="color: goldenrod">info is correct</span> `;
+        document.getElementById("welcomeMessage").classList.remove("d-none");
+        document.getElementById("welcomeMessage").innerHTML = `Hello, ${firstNameInput.value} ${secondNameInput.value}`;
+        document.getElementById("welcomeMessage").style.color = "white";
+
+        $("#flightInfoDisplayBtn").removeClass("d-none");
+        $("#submitButton").addClass("d-none");
+        const flightCheckOutInfo = $("#flightCheckOutInfo")
+        flightCheckOutInfo.empty();
+
+        for (const key in cart ){
+            const element = cart[key];
+
+            flightCheckOutInfo.append(`
+                                        <p>Duration: ${element.duration}</p>
+                                        <p>FlightType: ${element.type}</p>
+                                        <p>Speed: ${element.speed}</p>
+                                        <p>Price Per Km: ${element.pricePerKm}</p>
+                                        <p>Extra Fuel Charge: ${element.extraFuelCharge}</p>
+                                        <p>Quantity: ${element.quantity}</p>
+                                        <p>Total Price: ${element.totalPrice * element.quantity} </p>
+                                      `)
+        }
+        //display flight info in the cart into the modal flightCheckOutInfo
+
+    }
+    //if all the info is correct then we can proceed to show user the flight info
+})
+
+const congratulationModelDisplay = $("#congratulationModelDisplay");
+
+congratulationModelDisplay.on("click", () => {
+
+})
